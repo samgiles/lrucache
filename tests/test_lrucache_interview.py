@@ -32,9 +32,9 @@ class TestLRUCache(unittest.TestCase):
         cache.insert(key="b", value=123)
         cache.insert(key="c", value=12)
 
-        _ = cache.get("c")
-        _ = cache.get("b")
-        _ = cache.get("a")
+        cache.get("c")
+        cache.get("b")
+        cache.get("a")
 
         cache.insert(key="d", value=1)
 

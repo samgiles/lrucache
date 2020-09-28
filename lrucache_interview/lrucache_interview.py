@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 
+
 class LRUCache(object):
     """
     This Least Recently Used Cache is an in memory key value cache with a fixed
     capacity.
 
     When the number of items in the cache reaches the capacity, the item that
-    was used least recently of all cache items is evicted.
+    was used least recently of all cache items is evicted. This is tracked
+    using a DoublyLinkedList. Each node of the list is stored in a map, when
+    that index is accessed, the node is moved to the head of the list.
+    When the cache is at capacity, the tail of the list is removed.
+
+    `insert`, and `get` will always run in linear time with respect to the
+    size of the cache.
     """
     def __init__(self, capacity):
         self.capacity = max(1, capacity)
@@ -87,6 +94,18 @@ class DoublyLinkedList(object):
             self.head.previous = node
             node.next = self.head
             self.head = node
+
+    def remove_head(self):
+        if self.head is None:
+            return
+
+        if self.head == self.tail:
+            self.head = None
+            self.tail = None
+            return
+
+        self.head = self.head.next
+        self.head.previous = None
 
     def remove_tail(self):
         if self.tail is None:
