@@ -71,6 +71,9 @@ class DoublyLinkedListNode(object):
         self.next = None
         self.previous = None
 
+    def __repr__(self):
+        return "{{{key}: {value}}}".format(key=self.key, value=self.value)
+
 
 class DoublyLinkedList(object):
     def __init__(self):
@@ -117,3 +120,11 @@ class DoublyLinkedList(object):
             return
         self.tail = self.tail.previous
         self.tail.next = None
+
+    def __repr__(self):
+        node = self.head
+        values = []
+        while node is not None:
+            values.append(node)
+            node = node.next
+        return values.__repr__()
