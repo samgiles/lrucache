@@ -19,7 +19,7 @@ class LRUCache(object):
         self.capacity = max(1, capacity)
         self.current_size = 0
         self.cache = {}
-        self.most_recent_list = DoublyLinkedList()
+        self.cache_items = DoublyLinkedList()
 
     def insert(self, key, value):
         if key not in self.cache:
@@ -38,6 +38,7 @@ class LRUCache(object):
 
         lru_node = self.cache[key]
         self.update_most_recent(lru_node)
+
         return lru_node.value
 
     def replace(self, key, value):
@@ -46,11 +47,11 @@ class LRUCache(object):
         self.cache[key].value = value
 
     def update_most_recent(self, list_node):
-        self.most_recent_list.set_head(list_node)
+        self.cache_items.set_head(list_node)
 
     def evict_least_recent(self):
-        key_to_remove = self.most_recent_list.tail.key
-        self.most_recent_list.remove_tail()
+        key_to_remove = self.cache_items.tail.key
+        self.cache_items.remove_tail()
         del self.cache[key_to_remove]
 
 
@@ -97,6 +98,17 @@ class DoublyLinkedList(object):
             self.head.previous = node
             node.next = self.head
             self.head = node
+
+    def remove_node(self, node):
+        if node is None:
+            return
+
+        if node == self.head:
+            self.remove_head()
+        elif node == self.tail:
+            self.remove_tail()
+        else:
+            node.remove()
 
     def remove_head(self):
         if self.head is None:
