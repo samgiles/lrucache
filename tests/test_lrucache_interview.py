@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import unittest
@@ -43,8 +42,3 @@ class TestLRUCache(unittest.TestCase):
         assert cache.get("d") == 1
         assert cache.get("b") == 123
         assert cache.get("a") == 1234
-
-
-if __name__ == '__main__':
-    import sys
-    sys.exit(unittest.main())
