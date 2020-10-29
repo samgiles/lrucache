@@ -19,16 +19,18 @@ class LRUCache(object):
     """
     def __init__(self, capacity):
         self.capacity = max(1, capacity)
-        self.current_size = 0
+
         self.cache = {}
         self.cache_items = DoublyLinkedList()
+
+    @property
+    def current_size(self):
+        return len(self.cache)
 
     def insert(self, key, value):
         if key not in self.cache:
             if self.current_size == self.capacity:
                 self.evict_least_recent()
-            else:
-                self.current_size += 1
             self.cache[key] = self.cache_items.new_list_node(key, value)
         else:
             self.replace(key, value)
